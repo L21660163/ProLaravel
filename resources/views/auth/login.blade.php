@@ -7,9 +7,24 @@
     </div>
     <!-- Left side toolbar with buttons -->
     <div class="flex space-x-4">
-        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">Intranet</button>
-        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">Ayuda</button>
-        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">Crear cuenta</button>
+        <a
+            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+            >
+            Ayuda
+        </a>
+        <a
+            href="{{ url('/intranet') }}"
+            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+            >
+            Intranet
+        </a>
+        <a
+            href="{{ url('/register') }}"
+            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+            >
+            Registrarse
+        </a>
+                                    
     </div>
 
 </div>

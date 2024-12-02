@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+use App\Models\Role;
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -23,13 +25,37 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
+{
+    // Autenticar al usuario
+    $request->authenticate();
 
-        $request->session()->regenerate();
+    // Regenerar la sesión para protegerla contra ataques
+    $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+    // Obtener el rol del usuario
+    $user = Auth::user();
+    $role = $user->roles->first(); // Suponiendo que un usuario solo tiene un rol
+
+    // Redirigir según el rol
+    if ($role) {
+        switch ($role->name) {
+            case 'admin':
+                return redirect()->route('admin');
+            case 'alumno':
+                return redirect()->route('alumno');
+            case 'docente':
+                return redirect()->route('docente');
+            default:
+                return redirect()->route('home');
+        }
     }
+
+    // Si no tiene rol, redirige al home
+    return redirect()->route('home');
+}
+
+
+
 
     /**
      * Destroy an authenticated session.
