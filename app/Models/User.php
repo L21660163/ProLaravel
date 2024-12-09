@@ -58,6 +58,9 @@ class User extends Authenticatable
         ];
     }
 
-
+    public function proyectos()
+    {
+        return $this->belongsToMany(Proyecto::class, 'asesor_proyecto');
+    }
 
 }

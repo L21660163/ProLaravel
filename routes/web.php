@@ -168,3 +168,16 @@ Route::get('/subir-archivo', function () {
 })->middleware('auth');  // Asegúrate de que el usuario esté autenticado
 
 Route::post('/subir-archivo', [FilesController::class, 'subir'])->name('archivo.subir')->middleware('auth');  // Asegúrate de que el usuario esté autenticado
+
+
+use App\Http\Controllers\JefeAcademiaController;
+
+Route::get('/jefeacademia', [JefeAcademiaController::class, 'index'])->name('jefeacademia.index');
+Route::get('/proyecto/{id}', [JefeAcademiaController::class, 'detalle'])->name('proyecto.detalle');
+Route::get('/proyecto/crear', [JefeAcademiaController::class, 'crear'])->name('proyecto.crear');
+Route::post('/proyecto', [JefeAcademiaController::class, 'store'])->name('proyecto.store');
+
+
+use App\Http\Controllers\ProyectoController;
+
+Route::resource('proyectos', ProyectoController::class);
