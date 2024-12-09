@@ -1,139 +1,93 @@
-<style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        .navbar {
-            background-color: #333;
-            color: white;
-            padding: 0.5rem;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-        }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            font-size: 1rem;
-        }
-        .navbar a:hover {
-            background-color: #575757;
-            border-radius: 5px;
-        }
-        .section {
-            display: none;
-            padding: 20px;
-            margin-top: 20px;
-        }
+<div class="min-h-screen bg-gray-100">
 
-        .active {
-            display: block; /* Only display the active section */
-        }
-    </style>
-</head>
-<body>
-
-    <div class="navbar">
-        <a href="#" onclick="showSection('misDocumentos')">Mis documentos</a>
-        <a href="#" onclick="showSection('cartaAceptacion')">Carta de aceptación</a>
-        <a href="#" onclick="showSection('cartaPresentacion')">Carta de presentación</a>
-        <a href="#" onclick="showSection('informeTecnico')">Informe técnico</a>
-        <a href="#" onclick="showSection('formato8A')">Formato 8-A</a>
-        <a href="#" onclick="showSection('formato8B')">Formato 8-B</a>
-        <a href="#" onclick="showSection('formato9')">Formato 9</a>
-        <a href="#" onclick="showSection('cartaTerminacion')">Carta de terminación</a>
-    </div>
-
-    <div class="container">
-        <!-- Sección: Mis Documentos -->
-        <div id="misDocumentos" class="section">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                @include('alumno.formatos.mydocs')<!-- Aquí se incluiría el contenido -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Sección: Carta de Aceptación -->
-        <div id="cartaAceptacion" class="section">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    @include('alumno.formatos.carta-aceptacion') <!-- Aquí se incluiría el contenido -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Sección: Carta de Presentación -->
-        <div id="cartaAceptacion" class="section">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    @include('alumno.formatos.carta-presentacion') <!-- Aquí se incluiría el contenido -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Sección: Informe Técnico -->
-        <div id="informeTecnico" class="section">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    @include('alumno.formatos.informe-tecnico') <!-- Aquí se incluiría el contenido -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Sección: Formato 8-A -->
-        <div id="formato8A" class="section">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    @include('alumno.formatos.formato8a') <!-- Aquí se incluiría el contenido -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Sección: Formato 8-B -->
-        <div id="formato8B" class="section">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    @include('alumno.formatos.formato8b') <!-- Aquí se incluiría el contenido -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Sección: Formato 9 -->
-        <div id="formato9" class="section">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    @include('alumno.formatos.formato9') <!-- Aquí se incluiría el contenido -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Sección: Carta de Terminación -->
-        <div id="cartaTerminacion" class="section">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                    @include('alumno.formatos.carta-terminacion') <!-- Aquí se incluiría el contenido -->
-                </div>
-            </div>
+    <!-- Barra de navegación (toolbar) -->
+    <div class="bg-blue-600 p-4">
+        <div class="flex space-x-6">
+            <!-- Opciones de la barra de navegación -->
+            <button id="misDocumentos" class="text-white hover:bg-blue-700 px-4 py-2 rounded-md focus:outline-none">
+                Mis Documentos
+            </button>
+            <button id="cartaAceptacion" class="text-white hover:bg-blue-700 px-4 py-2 rounded-md focus:outline-none">
+                Carta de Aceptación
+            </button>
+            <button id="cartaPresentacion" class="text-white hover:bg-blue-700 px-4 py-2 rounded-md focus:outline-none">
+                Carta de Presentación
+            </button>
+            <button id="informeTecnico" class="text-white hover:bg-blue-700 px-4 py-2 rounded-md focus:outline-none">
+                Informe Técnico
+            </button>
+            <button id="formato8a" class="text-white hover:bg-blue-700 px-4 py-2 rounded-md focus:outline-none">
+                Formato 8A
+            </button>
+            <button id="formato8b" class="text-white hover:bg-blue-700 px-4 py-2 rounded-md focus:outline-none">
+                Formato 8B
+            </button>
+            <button id="formato9" class="text-white hover:bg-blue-700 px-4 py-2 rounded-md focus:outline-none">
+                Formato 9
+            </button>
+            <button id="cartaTerminacion" class="text-white hover:bg-blue-700 px-4 py-2 rounded-md focus:outline-none">
+                Carta de Terminación
+            </button>
         </div>
     </div>
 
-    <script>
-        // Función para mostrar una sección y ocultar las demás
-        function showSection(sectionId) {
-            console.log("Sección seleccionada:", sectionId); // Verifica cuál sección fue seleccionada
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
+    <!-- Secciones de contenido (por defecto solo se muestra "Mis Documentos") -->
+    <div class="p-6">
+        <div id="misDocumentosSection" class="section-content">
+            <h2 class="text-xl font-semibold">Mis Documentos</h2>
+            <p>Contenido relacionado con los documentos...</p>
+        </div>
 
-            const selectedSection = document.getElementById(sectionId);
-            if (selectedSection) {
-                selectedSection.classList.add('active');
-            } else {
-                console.log("Sección no encontrada:", sectionId); // Verifica si se encuentra el ID
-            }
-        }
+        <div id="cartaAceptacionSection" class="section-content hidden">
+            <h2 class="text-xl font-semibold">Carta de Aceptación</h2>
+            <p>Contenido relacionado con la carta de aceptación...</p>
+        </div>
 
-    </script>
+        <div id="cartaPresentacionSection" class="section-content hidden">
+            <h2 class="text-xl font-semibold">Carta de Presentación</h2>
+            <p>Contenido relacionado con la carta de presentación...</p>
+        </div>
 
-</body>
+        <div id="informeTecnicoSection" class="section-content hidden">
+            <h2 class="text-xl font-semibold">Informe Técnico</h2>
+            <p>Contenido relacionado con el informe técnico...</p>
+        </div>
+
+        <div id="formato8aSection" class="section-content hidden">
+            <h2 class="text-xl font-semibold">Formato 8A</h2>
+            <p>Contenido relacionado con Formato 8A...</p>
+        </div>
+
+        <div id="formato8bSection" class="section-content hidden">
+            <h2 class="text-xl font-semibold">Formato 8B</h2>
+            <p>Contenido relacionado con Formato 8B...</p>
+        </div>
+
+        <div id="formato9Section" class="section-content hidden">
+            <h2 class="text-xl font-semibold">Formato 9</h2>
+            <p>Contenido relacionado con Formato 9...</p>
+        </div>
+
+        <div id="cartaTerminacionSection" class="section-content hidden">
+            <h2 class="text-xl font-semibold">Carta de Terminación</h2>
+            <p>Contenido relacionado con la carta de terminación...</p>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts para cambiar las secciones -->
+<script>
+    const sections = document.querySelectorAll('.section-content');
+    const buttons = document.querySelectorAll('button');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Ocultar todas las secciones
+            sections.forEach(section => section.classList.add('hidden'));
+
+            // Mostrar la sección correspondiente
+            const sectionId = button.id + 'Section';
+            document.getElementById(sectionId).classList.remove('hidden');
+        });
+    });
+</script>

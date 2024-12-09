@@ -11,8 +11,8 @@ class AlumnoController extends Controller
 {
     public function index()
     {
-        // Página principal del alumno
-        return view('alumno.dashboard');
+        $projects = Project::all();
+        return view('alumno', ['projects' => $projects]);
     }
 
     public function registerResidency()

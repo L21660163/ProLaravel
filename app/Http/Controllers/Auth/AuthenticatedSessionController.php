@@ -26,6 +26,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
 {
+
+    $email = $request->input('email');
+    $domain = '@matehuala.tecnm.mx';
+    if (!str_ends_with($email, $domain)) {
+        return back()->withErrors([
+            'email' => 'El correo debe pertenecer al dominio ' . $domain . '.',
+        ])->onlyInput('email');
+    }
+    
     // Autenticar al usuario
     $request->authenticate();
 
@@ -45,13 +54,17 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('alumno');
             case 'docente':
                 return redirect()->route('docente');
+            case 'division':
+                return redirect()->route('division');
+            case 'gestion':
+                return redirect()->route('gestion');
             default:
-                return redirect()->route('home');
+                return redirect()->route('dashboard');
         }
     }
 
     // Si no tiene rol, redirige al home
-    return redirect()->route('home');
+    return redirect()->route('dashboard');
 }
 
 

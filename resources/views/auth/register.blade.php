@@ -16,7 +16,7 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
+        <!-- Password --> 
         <div class="mt-4">
             <x-input-label for="password" :value="__('Contraseña')" />
 
@@ -50,3 +50,22 @@
         </div>
     </form>
 </x-guest-layout>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const nameInput = document.getElementById('name'); // Campo de nombre
+        const emailInput = document.getElementById('email'); // Campo de correo
+        const domain = '@matehuala.tecnm.mx';
+
+        // Evento para actualizar el correo automáticamente
+        nameInput.addEventListener('input', () => {
+            const nameValue = nameInput.value.trim(); // Obtener el valor del campo nombre
+            if (nameValue) {
+                emailInput.value = nameValue + domain; // Actualizar el campo de correo
+            } else {
+                emailInput.value = ''; // Limpiar el campo de correo si no hay nombre
+            }
+        });
+    });
+</script>

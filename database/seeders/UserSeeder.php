@@ -13,49 +13,32 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'Maria Lizet Molina Obregon',
-            'email' => 'marili@gmail.com',
-            'password' => bcrypt('123456789'),
-        ])->assignRole('alumno');
-
-        User::create([
-            'name' => 'Tania Ortega',
-            'email' => 'taniaortega@gmail.com',
-            'password' => bcrypt('123456789'),
-        ])->assignRole('alumno');
-
-        User::create([
-            'name' => 'Miguel Gaytan Ortiz',
-            'email' => 'gytanortiz@gmail.com',
-            'password' => bcrypt('123456789'),
-        ])->assignRole('alumno');
 
         User::create([
             'name' => 'Ezequiel Hernandez Perez',
-            'email' => 'ezehernandez@gmail.com',
+            'email' => 'ezehernandez@matehuala.tecnm.mx',
             'password' => bcrypt('123456789'),
         ])->assignRole('alumno');
 
         User::create([
             'name' => 'Miriam Lopez Garcia',
-            'email' => 'miriamlopez@gmail.com',
+            'email' => 'miriamlopez@matehuala.tecnm.mx',
             'password' => bcrypt('123456789'),
         ])->assignRole('docente');
         User::create([
             'name' => 'Pamela Ledezma Juarez',
-            'email' => 'pamelajuarez@gmail.com',
+            'email' => 'pamelajuarez@matehuala.tecnm.mx',
             'password' => bcrypt('123456789'),
         ])->assignRole('docente');
 
         User::create([
             'name' => 'Isael Torres Ortiz',
-            'email' => 'torres@gmail.com',
+            'email' => 'torres@matehuala.tecnm.mx',
             'password' => bcrypt('123456789'),
         ])->assignRole('docente');
         User::create([
             'name' => 'Carlos Villalobos Heguia',
-            'email' => 'heguiacarlos@gmail.com',
+            'email' => 'heguiacarlos@matehuala.tecnm.mx',
             'password' => bcrypt('123456789'),
         ])->assignRole('docente');
     }

@@ -33,6 +33,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'control_number',
     ];
 
     /**
@@ -59,5 +60,9 @@ class User extends Authenticatable
     }
 
 
+    public function person()
+    {
+        return $this->belongsTo(Person::class, 'id_person');
+    }
 
 }

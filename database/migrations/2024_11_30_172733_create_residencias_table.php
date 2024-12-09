@@ -174,3 +174,5 @@ return new class extends Migration
         Schema::dropIfExists('person_departments');
     }
 };
+
+

@@ -46,33 +46,77 @@
         <!-- Modal -->
 <div id="modal-crear-usuario" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
     <div class="bg-white rounded-lg w-96 p-6">
-        <h3 class="text-lg font-semibold mb-4">Crear Usuario</h3>
-        <form id="form-crear-usuario">
-            <div class="mb-4">
-                <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
-                <input type="text" id="name" name="name" class="mt-1 block w-full border-gray-300 rounded-md" required>
-            </div>
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                <input type="email" id="email" name="email" class="mt-1 block w-full border-gray-300 rounded-md" required>
-            </div>
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                <input type="password" id="password" name="password" class="mt-1 block w-full border-gray-300 rounded-md" required>
-            </div>
-            <div class="mb-4">
-                <label for="role" class="block text-sm font-medium text-gray-700">Rol</label>
-                <select id="role" name="role" class="mt-1 block w-full border-gray-300 rounded-md" required></select>
-            </div>
-            <div class="mb-4">
-                <label for="permission" class="block text-sm font-medium text-gray-700">Permiso</label>
-                <select id="permission" name="permission" class="mt-1 block w-full border-gray-300 rounded-md" required></select>
-            </div>
-            <div class="flex justify-end">
-                <button type="button" id="btn-cancelar" class="bg-gray-500 text-white py-2 px-4 rounded mr-2">Cancelar</button>
-                <button type="submit" class="bg-purple-500 text-white py-2 px-4 rounded">Crear</button>
-            </div>
-        </form>
+
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
+
+        <!-- Name -->
+        <div>
+            <x-input-label for="name" :value="__('Nombre')" />
+            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <!-- Email Address -->
+        <div class="mt-4">
+            <x-input-label for="email" :value="__('Correo')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Password --> 
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Contraseña')" />
+
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="new-password" />
+
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mt-4">
+            <x-input-label for="password_confirmation" :value="__('Confirmar Contraseña')" />
+
+            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                            type="password"
+                            name="password_confirmation" required autocomplete="new-password" />
+
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <div class="flex items-center justify-end mt-4">
+            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+                {{ __('Ya estas registrado?') }}
+            </a>
+
+            <x-primary-button class="ms-4">
+                {{ __('Registrarse') }}
+            </x-primary-button>
+        </div>
+    </form>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const nameInput = document.getElementById('name'); // Campo de nombre
+        const emailInput = document.getElementById('email'); // Campo de correo
+        const domain = '@matehuala.tecnm.mx';
+
+        // Evento para actualizar el correo automáticamente
+        nameInput.addEventListener('input', () => {
+            const nameValue = nameInput.value.trim(); // Obtener el valor del campo nombre
+            if (nameValue) {
+                emailInput.value = nameValue + domain; // Actualizar el campo de correo
+            } else {
+                emailInput.value = ''; // Limpiar el campo de correo si no hay nombre
+            }
+        });
+    });
+</script>
     </div>
 </div>
 

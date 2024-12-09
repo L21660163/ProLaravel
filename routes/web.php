@@ -10,6 +10,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FilesController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PersonController;
+use App\Http\Controllers\TableController;
+use App\Http\Controllers\ResidenceProjectController;
+use App\Http\Controllers\AlumnoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +22,22 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/division', function () {
+    return view('division');
+})->middleware(['auth', 'verified'])->name('division');
+
+Route::get('/gestion', function () {
+    return view('gestionTV');
+})->middleware(['auth', 'verified'])->name('gestion');
+
+Route::get('/academico', function () {
+    return view('academico');
+})->middleware(['auth', 'verified'])->name('academico');
+
+Route::get('/jefeCarrera', function () {
+    return view('jefeCarrera');
+})->middleware(['auth', 'verified'])->name('jefeCarrera');
 
 Route::get('/alumno/alumno', function () {
     return view('alumno');
@@ -168,3 +188,46 @@ Route::get('/subir-archivo', function () {
 })->middleware('auth');  // Asegúrate de que el usuario esté autenticado
 
 Route::post('/subir-archivo', [FilesController::class, 'subir'])->name('archivo.subir')->middleware('auth');  // Asegúrate de que el usuario esté autenticado
+
+Route::get('/person', [PersonController::class, 'index']);
+Route::get('/person-departments', [TableController::class, 'getPersonDepartments']);
+Route::get('/person-permissions', [TableController::class, 'getPersonPermissions']);
+Route::get('/residence-adviser-types', [TableController::class, 'getResidenceAdviserTypes']);
+Route::get('/residence-ambits', [TableController::class, 'getResidenceAmbits']);
+Route::get('/residence-comment-types', [TableController::class, 'getResidenceCommentTypes']);
+Route::get('/residence-comment-types', [TableController::class, 'getResidenceDictums']);
+Route::get('/residence-documents', [TableController::class, 'getResidenceDocuments']);
+Route::get('/residence-file-dictums', [TableController::class, 'getResidenceFileDictums']);
+Route::get('/residence-file-types', [TableController::class, 'getResidenceFileTypes']);
+Route::get('/residence-kinds', [TableController::class, 'getResidenceKinds']);
+Route::get('/residence-natures', [TableController::class, 'getResidenceNatures']);
+Route::get('/residence-project-phases', [TableController::class, 'getResidenceProjectPhases']);
+Route::get('/residence-project-types', [TableController::class, 'getResidenceProjectTypes']);
+Route::get('/residence-sectors', [TableController::class, 'getResidenceSectors']);
+Route::get('/person_career', [TableController::class, 'getPersonCareer']);
+Route::get('/residence-companies', [TableController::class, 'getResidenceCompanies']);
+
+
+
+
+Route::post('/residence-projects', [ResidenceProjectController::class, 'store']);
+
+
+Route::get('/get-user-projects', [ResidenceProjectController::class, 'getUserProjects']);
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/user-projects', [ResidenceProjectController::class, 'getUserProjects'])->name('user.projects');
+    Route::get('/project/{id}', [ResidenceProjectController::class, 'show'])->name('project.show');
+});
+
+Route::middleware(['auth', 'verified'])->get('/alumno/alumno', [AlumnoController::class, 'index'])->name('alumno');
+
+Route::post('/upload-report', [FilesController::class, 'file'])->name('upload.report');
+
+Route::middleware(['auth', 'verified'])->post('/upload-report', [FilesController::class, 'file'])->name('upload.report');
+
+
+use App\Http\Controllers\ResidenceCompanyController;
+
+Route::get('/companies', [ResidenceCompanyController::class, 'index'])->name('companies.index');

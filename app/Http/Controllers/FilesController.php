@@ -8,6 +8,7 @@ use App\Models\MyFile;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\ResidenceProjectFile;
 
 class FilesController extends Controller
 {
@@ -71,36 +72,58 @@ class FilesController extends Controller
     }
 
     public function subir(Request $request)
-    {
-        // Validación del archivo
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'archivo' => 'required|file|mimes:jpg,jpeg,png,pdf,docx', // Agrega otros tipos de archivos si es necesario
-        ]);
+{
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'archivo' => 'required|file|mimes:jpg,jpeg,png,pdf,docx',
+        'seccion' => 'required|string', // Campo para identificar la sección
+    ]);
 
-        // Obtenemos el archivo subido
-        $file = $request->file('archivo');
+    $userId = Auth::id();
+    $userFolder = 'usuarios/' . $userId;
 
-        // Obtener el ID del usuario autenticado
-        $userId = Auth::id();
-
-        // Normalizamos el nombre del archivo para evitar caracteres especiales
-        $filename = Str::slug($request->input('nombre')) . '.' . $file->getClientOriginalExtension();
-
-        // Verificamos si la carpeta del usuario ya existe, si no, la creamos
-        $userFolder = 'usuarios/' . $userId; // Carpeta del usuario por ID
-
-        // Usamos la función 'exists' para verificar si la carpeta ya existe
-        if (!Storage::exists($userFolder)) {
-            // Crear la carpeta si no existe
-            Storage::makeDirectory($userFolder);
-        }
-
-        // Guardamos el archivo en la carpeta del usuario
-        $path = $file->storeAs($userFolder, $filename, 'public');
-
-        // Redirigimos de nuevo con un mensaje de éxito
-        return redirect()->back()->with('success', 'Archivo cargado exitosamente');
+    if (!Storage::exists($userFolder)) {
+        Storage::makeDirectory($userFolder);
     }
 
+    $file = $request->file('archivo');
+    $prefix = Str::slug($request->input('seccion')); // Prefijo basado en la sección
+    $filename = $prefix . '-' . Str::slug($request->input('nombre')) . '.' . $file->getClientOriginalExtension();
+
+    $file->storeAs($userFolder, $filename, 'public');
+
+    return redirect()->back()->with('success', 'Archivo cargado exitosamente.');
+}
+
+
+
+//Reporte preliminar
+
+public function file(Request $request)
+{
+    $request->validate([
+        'file' => 'required|file|mimes:pdf',
+        'id_project' => 'required|integer',
+    ]);
+
+    // Si llegamos aquí, la validación fue exitosa
+    $userId = Auth::user()->id;
+
+    try {
+        $file = $request->file('file');
+        $fileName = time() . '-' . $file->getClientOriginalName();
+        $path = $file->storeAs('uploads', $fileName);
+
+        return response()->json([
+            'message' => 'Archivo subido exitosamente',
+            'path' => $path,
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Error al procesar el archivo',
+            'details' => $e->getMessage(),
+        ], 500);
+    }
+
+}
 }
