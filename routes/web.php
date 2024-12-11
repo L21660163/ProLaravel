@@ -181,3 +181,13 @@ Route::post('/proyecto', [JefeAcademiaController::class, 'store'])->name('proyec
 use App\Http\Controllers\ProyectoController;
 
 Route::resource('proyectos', ProyectoController::class);
+
+
+use App\Http\Controllers\JefeDeAcademiaController;
+
+Route::prefix('jefedeacademia')->group(function () {
+    Route::get('/', [JefeDeAcademiaController::class, 'index'])->name('jefedeacademia.index');
+    
+    // Ruta única para aceptar o rechazar proyectos
+    Route::post('/{id}/proceso', [JefeDeAcademiaController::class, 'proceso'])->name('jefedeacademia.proceso');
+});
