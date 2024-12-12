@@ -191,3 +191,15 @@ Route::prefix('jefedeacademia')->group(function () {
     // Ruta única para aceptar o rechazar proyectos
     Route::post('/{id}/proceso', [JefeDeAcademiaController::class, 'proceso'])->name('jefedeacademia.proceso');
 });
+
+
+use App\Http\Controllers\DepartmentHeadController;
+
+Route::get('/jefe-departamento', [DepartmentHeadController::class, 'index'])->name('department.head');
+
+
+use App\Http\Controllers\ResidenceProjectController;
+
+// Subir proyecto
+Route::get('/subirproyecto', [ResidenceProjectController::class, 'index'])->name('residenceproject.index');
+Route::post('/subirproyecto/store', [ResidenceProjectController::class, 'store'])->name('residenceproject.store');

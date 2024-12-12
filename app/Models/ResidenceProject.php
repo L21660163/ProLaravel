@@ -12,10 +12,9 @@ class ResidenceProject extends Model
     protected $fillable = [
         'id_project_phase', 'id_project_type', 'id_company', 'id_nature', 'id_ambit',
         'id_kind', 'titulo', 'objetivo_general', 'objetivos_especificos', 'justificacion',
-        'actividades', 'comentarios', 'id_career', 'control_number'
+        'actividades', 'comentarios', 'id_career', 'control_number', 'pdf_file' // Agregado
     ];
 
-    // Relación con ResidenceProjectPhase
     public function phase()
     {
         return $this->belongsTo(ResidenceProjectPhase::class, 'id_project_phase');
