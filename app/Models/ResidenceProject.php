@@ -19,5 +19,10 @@ class ResidenceProject extends Model
     {
         return $this->belongsTo(ResidenceProjectPhase::class, 'id_project_phase');
     }
+
+    public function projectFiles()
+    {
+        return $this->hasMany(ProjectFile::class, 'id_project', 'id'); // 'id_project' se refiere al campo en la tabla 'project_file'
+    }
 }
 

@@ -203,3 +203,15 @@ use App\Http\Controllers\ResidenceProjectController;
 // Subir proyecto
 Route::get('/subirproyecto', [ResidenceProjectController::class, 'index'])->name('residenceproject.index');
 Route::post('/subirproyecto/store', [ResidenceProjectController::class, 'store'])->name('residenceproject.store');
+
+
+use App\Http\Controllers\ResidenceCompanyController;
+
+Route::get('/gtv', [ResidenceCompanyController::class, 'index'])->name('gtv.index');
+Route::post('/gtv', [ResidenceCompanyController::class, 'store'])->name('gtv.store');
+
+
+use App\Http\Controllers\FileController;
+
+Route::get('/subirprojecto', [FileController::class, 'index'])->name('archivo.index');
+Route::post('/subirprojecto', [FileController::class, 'store'])->name('archivo.store');

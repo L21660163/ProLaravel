@@ -29,7 +29,7 @@
                                     <h4 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
                                         {{ $proyecto->titulo }}
                                     </h4>
-                                    
+
                                     <!-- Objetivo general -->
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
                                         {{ $proyecto->objetivo_general }}
@@ -39,6 +39,26 @@
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">
                                         <strong>Control Number:</strong> {{ $proyecto->control_number }}
                                     </p>
+
+                                    <!-- Mostrar archivos PDF -->
+                                    @if($proyecto->projectFiles->isNotEmpty())
+                                        <div class="mt-4">
+                                            <h5 class="text-sm font-semibold text-gray-800 dark:text-gray-200">Archivos:</h5>
+                                            <ul class="list-disc list-inside text-gray-600 dark:text-gray-400">
+                                                @foreach($proyecto->projectFiles as $file)
+                                                    <li>
+                                                        <a href="{{ asset($file->ruta) }}" target="_blank" class="text-blue-500 hover:underline">
+                                                            {{ $file->name }}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @else
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-4">
+                                            No hay archivos asociados a este proyecto.
+                                        </p>
+                                    @endif
 
                                     <!-- Formulario único para aceptar o rechazar -->
                                     <form id="form_{{ $proyecto->id }}" action="{{ route('jefedeacademia.proceso', $proyecto->id) }}" method="POST" class="mt-4">
