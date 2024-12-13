@@ -13,7 +13,7 @@ class Project extends Model
     protected $table = 'residence_projects'; // Asegúrate de tener una tabla 'projects'
 
     // Los atributos que se pueden asignar masivamente
-    protected $fillable = ['title', 'description', 'user_id'];
+    protected $fillable = ['title', 'description', 'user_id', 'fase_id', 'estado'];
 
     // Relación con el modelo User (si un proyecto pertenece a un usuario)
     public function user()
@@ -38,5 +38,10 @@ class Project extends Model
         return view('projects.index', ['projects' => []]);
     }
 }
+
+public function fase()
+    {
+        return $this->belongsTo(ResidenceProjectPhase::class, 'fase_id');
+    }
 
 }

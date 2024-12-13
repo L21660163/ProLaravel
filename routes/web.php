@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ArchivoController;
+use App\Http\Controllers\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Models\Role;
@@ -14,6 +15,8 @@ use App\Http\Controllers\PersonController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\ResidenceProjectController;
 use App\Http\Controllers\AlumnoController;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,7 +31,7 @@ Route::get('/division', function () {
 })->middleware(['auth', 'verified'])->name('division');
 
 Route::get('/gestion', function () {
-    return view('gestionTV');
+    return view('GTyV/index');
 })->middleware(['auth', 'verified'])->name('gestion');
 
 Route::get('/academico', function () {
@@ -229,5 +232,103 @@ Route::middleware(['auth', 'verified'])->post('/upload-report', [FilesController
 
 
 use App\Http\Controllers\ResidenceCompanyController;
+use App\Models\ResidenceProject;
 
 Route::get('/companies', [ResidenceCompanyController::class, 'index'])->name('companies.index');
+
+Route::put('/fase/update', [ResidenceProjectController::class, 'update'])->name('fase.update');
+
+
+Route::get('/projects/{id}/update-phase', [ResidenceProjectController::class, 'showUpdatePhaseForm'])->name('projects.updatePhaseForm');
+Route::put('/projects/{id}/update-phase', [ResidenceProjectController::class, 'updateProjectPhase'])->name('projects.updatePhase');
+
+
+Route::get('/projects/career/cn', [ResidenceProjectController::class, 'getProjectsByCareer']);
+
+
+Route::post('projects/update-phase/{id}', [ResidenceProjectController::class, 'updateProjectPhase']);
+
+
+Route::get('/projects/phase/2', [ResidenceProjectController::class, 'getProjectsByPhase']);
+
+
+Route::post('/upload-file', [ResidenceProjectController::class, 'uploadFile']);
+
+Route::get('/projects/{id}/files', [ResidenceProjectController::class, 'getProjectFiles']);
+
+
+Route::get('/files/view/{id}', [ResidenceProjectController::class, 'viewFile'])->name('files.view');
+Route::post('/document/upload', [ResidenceProjectController::class, 'uploadDocument'])->name('document.upload');
+
+Route::get('/mis-documentos', [ResidenceProjectController::class, 'myDocuments'])->name('my.documents');
+
+
+
+
+
+
+//Odalys
+Route::get('/subir-archivo', function () {
+    return view('upload');
+})->middleware('auth');  // Asegúrate de que el usuario esté autenticado
+
+Route::post('/subir-archivo', [FilesController::class, 'subir'])->name('archivo.subir')->middleware('auth');  // Asegúrate de que el usuario esté autenticado
+
+use App\Http\Controllers\JefeAcademiaController;
+
+Route::get('/jefeacademia', [JefeAcademiaController::class, 'index'])->name('jefeacademia.index');
+Route::get('/proyecto/{id}', [JefeAcademiaController::class, 'detalle'])->name('proyecto.detalle');
+Route::get('/proyecto/crear', [JefeAcademiaController::class, 'crear'])->name('proyecto.crear');
+Route::post('/proyecto', [JefeAcademiaController::class, 'store'])->name('proyecto.store');
+
+use App\Http\Controllers\ProyectoController;
+
+// Route::resource('proyectos', ProyectoController::class);
+
+use App\Http\Controllers\JefeDeAcademiaController;
+
+Route::prefix('jefedeacademia')->group(function () {
+    Route::get('/', [JefeDeAcademiaController::class, 'index'])->name('jefedeacademia.index');
+    
+    // Ruta única para aceptar o rechazar proyectos
+    Route::post('/{id}/proceso', [JefeDeAcademiaController::class, 'proceso'])->name('jefedeacademia.proceso');
+});
+
+use App\Http\Controllers\DepartmentHeadController;
+
+Route::get('/jefe-departamento', [DepartmentHeadController::class, 'index'])->name('department.head');
+
+
+// Subir proyecto
+Route::get('/subirproyecto', [ResidenceProjectController::class, 'index'])->name('residenceproject.index');
+Route::post('/subirproyecto/store', [ResidenceProjectController::class, 'store'])->name('residenceproject.store');
+
+Route::get('/gtv', [ResidenceCompanyController::class, 'index'])->name('gtv.index');
+Route::post('/gtv', [ResidenceCompanyController::class, 'store'])->name('gtv.store');
+
+
+
+
+
+
+
+// Rutas de coordinadores
+Route::get('/coordinador/copu', function () {
+    return view('/division/Coordinador-copu'); // Renderiza la vista 'Coordinador-copu.blade.php'
+})->name('copu');
+
+Route::get('/coordinador/iciv', function () {
+    return view('/division/Coordinador-iciv'); // Renderiza la vista 'Coordinador-iciv.blade.php'
+})->name('iciv');
+
+Route::get('/coordinador/igem', function () {
+    return view('/division/Coordinador-igem'); // Renderiza la vista 'Coordinador-igem.blade.php'
+})->name('igem');
+
+Route::get('/coordinador/isic', function () {
+    return view('/division/Coordinador-isic'); // Renderiza la vista 'Coordinador-isic.blade.php'
+})->name('isic');
+
+Route::get('/coordinador/iind', function () {
+    return view('/division/Coordinador-iind'); // Renderiza la vista 'Coordinador-iind.blade.php'
+})->name('iind');

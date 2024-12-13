@@ -59,9 +59,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Subir Documento</button>
                 </form>
-                @if(session('filePath'))
-                    <p class="mt-4 text-green-500">Archivo subido: <a href="{{ asset('storage/' . session('filePath')) }}" target="_blank">{{ basename(session('filePath')) }}</a></p>
-                @endif
+
             </div>
 
             <!-- Sección para Carta de Presentación -->
@@ -69,17 +67,20 @@
                 <h2 class="text-xl font-semibold">Carta de Presentación</h2>
                 <p>Contenido relacionado con la carta de presentación...</p>
                 <!-- Formulario para subir archivos -->
-                <form action="{{ route('document.upload') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('archivo.subir') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-4">
                     @csrf
-                    <div class="form-group">
-                        <label for="document">Subir documento PDF:</label>
-                        <input type="file" name="document" id="document" class="form-control" required>
+                    <div>
+                        <label for="nombre" class="text-gray-700 dark:text-gray-300">Nombre del archivo:</label>
+                        <input type="text" id="nombre" name="nombre" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
-                    <button type="submit" class="btn btn-primary">Subir Documento</button>
+
+                    <div>
+                        <label for="archivo" class="text-gray-700 dark:text-gray-300">Selecciona el archivo:</label>
+                        <input type="file" id="archivo" name="archivo" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none transition duration-200 ease-in-out">Subir archivo</button>
                 </form>
-                @if(session('filePath'))
-                    <p class="mt-4 text-green-500">Archivo subido: <a href="{{ asset('storage/' . session('filePath')) }}" target="_blank">{{ basename(session('filePath')) }}</a></p>
-                @endif
             </div>
 
             <!-- Sección para Informe Técnico -->
@@ -164,7 +165,7 @@
 
                     <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none transition duration-200 ease-in-out">Subir archivo</button>
                 </form>
-            </div>  
+            </div>
 
             <!-- Sección para Carta de Terminación -->
             <div id="cartaTerminacionSection" class="section-content hidden dark:bg-gray-800 p-4 rounded-lg shadow-lg mb-6">

@@ -17,6 +17,7 @@
         </button>
     </div>
 
+
     <!-- Modal -->
     <div id="modalProyecto" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 items-center justify-center z-50">
         <div x-data="{
@@ -95,13 +96,13 @@
                     <!-- Información Básica -->
                     <div x-show="section === 'info'">
                         <div class="mb-4">
-                            <label class="block text-gray-600 dark:text-gray-300 mb-1" for="empresa">Empresa</label>
-                            <select id="empresa" class="w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 rounded-md shadow-sm">
-                                <option>Selecciona una opción</option>
-                                <template x-for="company in residenceCompanies" :key="company.id">
-                                    <option :value="company.id" x-text="company.name"></option>
-                                </template>
-                            </select>
+                        <label class="block text-gray-600 dark:text-gray-300 mb-1" for="empresa">Empresa</label>
+                        <select id="empresa" class="w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 rounded-md shadow-sm">
+                            <option>Selecciona una opción</option>
+                            <template x-for="company in residenceCompanies" :key="company.id">
+                                <option :value="company.id" x-text="company.name"></option>
+                            </template>
+                        </select>
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-600 dark:text-gray-300 mb-1" for="titulo">Título del Proyecto</label>
@@ -269,55 +270,56 @@
         });
 
         async function saveProject() {
-        const tipo = document.getElementById('tipo');
-        const empresa = document.getElementById('empresa');
-        const caracter = document.getElementById('caracter');
-        const ambito = document.getElementById('ambito');
-        const clase = document.getElementById('clase');
-        const carrera = document.getElementById('carrera');
-        const titulo = document.getElementById('titulo');
-        const general = document.getElementById('general');
-        const objetivos = document.getElementById('objetivos');
-        const justificacion = document.getElementById('justificacion');
-        const actividades = document.getElementById('actividades');
-        const comentarios = document.getElementById('comentarios');
+            const tipo = document.getElementById('tipo');
+            const empresa = document.getElementById('empresa');
+            const caracter = document.getElementById('caracter');
+            const ambito = document.getElementById('ambito');
+            const clase = document.getElementById('clase');
+            const carrera = document.getElementById('carrera');
+            const titulo = document.getElementById('titulo');
+            const general = document.getElementById('general');
+            const objetivos = document.getElementById('objetivos');
+            const justificacion = document.getElementById('justificacion');
+            const actividades = document.getElementById('actividades');
+            const comentarios = document.getElementById('comentarios');
 
-        if (!tipo || !empresa || !caracter || !ambito || !clase || !carrera || !titulo || !general || !objetivos || !justificacion || !actividades || !comentarios) {
-            console.error('Uno o más elementos no se encontraron en el DOM.');
-            alert('Ocurrió un error al obtener los datos del formulario.');
-            return;
-        }
+            if (!tipo || !empresa || !caracter || !ambito || !clase || !carrera || !titulo || !general || !objetivos || !justificacion || !actividades || !comentarios) {
+                console.error('Uno o más elementos no se encontraron en el DOM.');
+                alert('Ocurrió un error al obtener los datos del formulario.');
+                return;
+            }
 
-        const formData = {
-            id_project_type: tipo.value,
-            id_company: empresa.value,
-            id_nature: caracter.value,
-            id_ambit: ambito.value,
-            id_kind: clase.value,
-            id_project_phase: 1, // Ajustar según el flujo de tu aplicación
-            titulo: titulo.value,
-            objetivo_general: general.value,
-            objetivos_especificos: objetivos.value,
-            justificacion: justificacion.value,
-            actividades: actividades.value,
-            comentarios: comentarios.value || null,
-            active: true, // Cambiar si necesitas un estado inicial diferente
-            id_carrera: carrera.value,
-        };
+            const formData = {
+                id_project_type: tipo.value,
+                id_company: empresa.value,
+                id_nature: caracter.value,
+                id_ambit: ambito.value,
+                id_kind: clase.value,
+                id_project_phase: 1, // Ajustar según el flujo de tu aplicación
+                titulo: titulo.value,
+                objetivo_general: general.value,
+                objetivos_especificos: objetivos.value,
+                justificacion: justificacion.value,
+                actividades: actividades.value,
+                comentarios: comentarios.value || null,
+                active: true, // Cambiar si necesitas un estado inicial diferente
+                id_career: carrera.value,
+                control_number: '{{ Auth::user()->control_number }}', // Incluye el control_number del usuario autenticado
+            };
 
-        console.log('Datos del formulario:', formData); // Registro de depuración
+            console.log('Datos del formulario:', formData); // Registro de depuración
 
-        try {
-            const response = await fetch('/residence-projects', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                },
-                body: JSON.stringify(formData),
-            });
+            try {
+                const response = await fetch('/residence-projects', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    },
+                    body: JSON.stringify(formData),
+                });
 
-            if (!response.ok) {
+                if (!response.ok) {
                 const errorData = await response.json();
                 console.error('Error details:', errorData);
                 throw new Error('Error al guardar el proyecto: ' + errorData.details);
@@ -334,30 +336,34 @@
 
 
     async function fetchUserProjects() {
-    try {
-        const response = await fetch('/get-user-projects');
-        const data = await response.json();
+            try {
+                const response = await fetch('/get-user-projects');
+                const data = await response.json();
 
-        console.log('Proyectos devueltos:', data);
+                console.log('Proyectos devueltos:', data);
 
-        if (data.error) {
-            throw new Error(data.error);
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                const projectsContainer = document.getElementById('user-projects');
+                if (projectsContainer) {
+                    projectsContainer.innerHTML = data.projects.map(project => `
+                        <div>
+                            ${project.titulo} - ${project.company_name}
+                        </div>
+                    `).join('');
+                } else {
+                    console.error('El contenedor no se encontró en el DOM');
+                }
+            } catch (error) {
+                console.error('Error al obtener los proyectos:', error);
+            }
         }
 
-        const projectsContainer = document.getElementById('user-projects');
-        if (projectsContainer) {
-            projectsContainer.innerHTML = data.projects.map(project => `
-                <div>
-                    ${project.titulo} - ${project.company_name}
-                </div>
-            `).join('');
-        } else {
-            console.error('El contenedor no se encontró en el DOM');
-        }
-    } catch (error) {
-        console.error('Error al obtener los proyectos:', error);
-    }
-}
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchUserProjects();
+        });
 
     </script>
 </body>

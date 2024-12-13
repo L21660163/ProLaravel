@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Company;
 use App\Models\ProjectPhase;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ResidenceProject extends Model
 {
+
+    protected $table = 'residence_projects';
+
     protected $fillable = [
         'id_project_type',
         'id_company',
@@ -22,6 +26,8 @@ class ResidenceProject extends Model
         'actividades',
         'comentarios',
         'active',
+        'id_career',
+        'control_number',
     ];
 
     public function company()
@@ -31,11 +37,33 @@ class ResidenceProject extends Model
 
 public function members()
 {
-    return $this->belongsToMany(Person::class, 'residence_project_persons', 'id_project', 'id_person');
+    return $this->belongsToMany(Person::class, 'residence_project_persons', 'id_project', 'control_number');
 }
 
 public function phases()
 {
     return $this->hasMany(ResidenceProjectPhase::class, 'id_project');
 }
+
+public function phase()
+    {
+        return $this->belongsTo(ResidenceProjectPhase::class, 'id_project_phase');
+    }
+
+    public function projectFiles()
+    {
+        return $this->hasMany(ProjectFile::class, 'id_project', 'id'); // 'id_project' se refiere al campo en la tabla 'project_file'
+    }
+}
+
+class ResidenceProjects extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['name'];
+
+    public function projectFiles()
+    {
+        return $this->hasMany(ProjectFile::class, 'id_project');
+    }
 }

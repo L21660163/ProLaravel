@@ -11,7 +11,7 @@ class PersonController extends Controller
     public function index()
     {
         // Obtener solo el id y el name de todas las personas
-        $person = Person::select('id', 'name')->get();
+        $person = Person::select('control_number', 'name')->get();
 
         return response()->json($person);
     }
